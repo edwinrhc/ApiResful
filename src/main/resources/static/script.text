@@ -1,0 +1,9 @@
+Create database db_jpa_crud;
+
+CREATE TABLE `products` (
+                            `id` bigint NOT NULL,
+                            `name` varchar(45) DEFAULT NULL,
+                            `price` int DEFAULT NULL,
+                            `decription` text,
+                            PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
