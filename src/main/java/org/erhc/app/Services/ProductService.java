@@ -13,5 +13,16 @@ public interface ProductService {
 
     Product save(Product product);
 
-     Optional<Product> delete (Product product);
+    /**
+     * A description of the entire Java function.
+     *
+     * @param  id       description of parameter
+     * @param  product  description of parameter
+     * @return         description of return value
+     */
+    Optional<Product> update(Long id, Product product);
+
+     Optional<Product> delete(Long id);
+
+
 }

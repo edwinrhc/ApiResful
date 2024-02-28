@@ -1,6 +1,7 @@
 package org.erhc.app.Controllers;
 
 
+import jakarta.validation.Valid;
 import org.erhc.app.Entities.Product;
 import org.erhc.app.Services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,22 +36,22 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> create(@RequestBody Product product){
+    public ResponseEntity<Product> create(@Valid @RequestBody Product product){
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(product));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> udpate(@PathVariable Long id, @RequestBody Product product){
-       product.setId(id);
-//Todo: Actualizar los campos necesarios - Estado en espera
-        return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(product));
+    public ResponseEntity<Product> udpate(@PathVariable Long id,@Valid @RequestBody Product product){
+        Optional<Product> productOptional = productService.update(id,product);
+        if(productOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.CREATED).body(productOptional.orElseThrow());
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
-        Product product = new Product();
-        product.setId(id);
-        Optional<Product> productOptional = productService.delete(product);
+        Optional<Product> productOptional = productService.delete(id);
         if(productOptional.isPresent()){
             return ResponseEntity.ok(productOptional.orElseThrow());
         }
