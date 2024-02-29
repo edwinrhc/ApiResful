@@ -1,9 +1,10 @@
 package org.erhc.app.Entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
+import org.erhc.app.validation.IsExistsDb;
+import org.erhc.app.validation.IsRequired;
 
 @Entity
 @Table(name="products")
@@ -14,17 +15,23 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Name cannot be empty")
+    @IsRequired(message = "{IsRequired.product.name}")
     @Size(min = 2, max = 100, message = "Name must be between 3 and 100 characters")
     @Column(name = "name")
     private String name;
 
+    @NotNull(message = "{NotNull.product.price}")
+    @Min(value=500, message="{Min.product.price}")
     @Column(name="price")
     private Integer price;
 
     @Column(name="description")
+    @IsRequired
     private String description;
 
+    @IsRequired
+    @IsExistsDb
+    private String sku;
 
 
 }

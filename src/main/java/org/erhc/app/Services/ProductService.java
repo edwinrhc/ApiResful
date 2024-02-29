@@ -24,5 +24,13 @@ public interface ProductService {
 
      Optional<Product> delete(Long id);
 
+    /**
+     * A description of the entire Java function.
+     *
+     * @param  sku	description of parameter
+     * @return      description of return value
+     */
+    boolean existsBySku(String sku);
+
 
 }
